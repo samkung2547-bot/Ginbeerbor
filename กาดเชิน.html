@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Secret Invitation</title>
+  <!-- ใช้ฟอนต์ Sarabun (คล้าย TH SarabunPSK) -->
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: url('https://www.transparenttextures.com/patterns/paper-fibers.png'), #f7f1e3;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: 'Sarabun', sans-serif;
+    }
+
+    .envelope {
+      position: relative;
+      width: 90%;
+      max-width: 340px;
+      height: 220px;
+      background: #a68b6a;
+      border: 3px solid #5d3a00;
+      border-radius: 10px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+      cursor: pointer;
+      overflow: hidden;
+      transition: transform 0.3s;
+    }
+
+    .envelope:hover {
+      transform: scale(1.02);
+    }
+
+    .touch-here {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 24px;
+      font-weight: bold;
+      color: #fff7e6;
+      text-shadow: 1px 1px 3px #000;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .letter {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(100%);
+  width: 280px;
+  max-width: 90%;
+  height: 180px;
+  background: #fffef2;
+  border: 2px dashed #5d3a00;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+  display: flex;
+  justify-content: center;  /* แนวนอน */
+  align-items: center;      /* แนวตั้ง */
+  text-align: center;
+  font-size: 22px;
+  color: #3a2c1e;
+  opacity: 0;
+  transition:
+    transform 1s ease,
+    opacity 1s ease;
+  z-index: 1;
+}
+
+    /* ✅ ตำแหน่งกระดาษเมื่อแสดง */
+    .show-letter .letter {
+      transform: translateX(-50%) translateY(-15px);
+      opacity: 1;
+    }
+
+    .show-letter .touch-here {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="envelope" onclick="openEnvelope()">
+    <div class="touch-here">แตะเพื่อเปิด</div>
+    <div class="letter">14 นี้กินเหล้ากัน 🍻<br>คับเพื่อนๆ </div>
+  </div>
+
+  <!-- เสียงเปิดซอง -->
+  <audio id="openSound" preload="auto">
+    <source src="https://www.soundjay.com/misc/sounds/envelope-open-1.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    function openEnvelope() {
+      const envelope = document.querySelector('.envelope');
+      const sound = document.getElementById('openSound');
+
+      if (!envelope.classList.contains('show-letter')) {
+        envelope.classList.add('show-letter');
+        sound.currentTime = 0;
+        sound.play().catch(err => {
+          console.warn("เสียงอาจไม่เล่นทันที:", err);
+        });
+      }
+    }
+  </script>
+</body>
+</html>
